@@ -11,11 +11,11 @@ This:
 ```
 
 Comment 1
-    Reply 1
-      Sub Reply 1    
-      Sub Reply 2
-    Reply 2
-  Comment 2
+  Reply 1
+    Sub Reply 1    
+    Sub Reply 2
+  Reply 2
+Comment 2
 
 ```
 is generated with this:
@@ -72,10 +72,14 @@ The 'blog' data comes from the 'testBlogs' array in $lib/index.js
 
 However, a version with a backend is in progress, which will add login, users and their avatars, and will save everything in a MongoDB database.
 
+---
+
+To try this out, download the zip, extract it, go into that folder, type 'npm install'\
+Then, go into Visual Code, open a terminal, and type 'npm run dev'
+
 #### Acknowledgements
 
 The project uses picnic.css for styling and ICONPACKS (www.iconpacks.net) for icons.
 
 
-To try this out, download the zip, extract it, go into that folder, type 'npm install'\
-Then, go into Visual Code, open a terminal, and type 'npm run dev'
+
