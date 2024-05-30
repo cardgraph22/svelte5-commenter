@@ -61,16 +61,21 @@
 
 {#if blog.replies && showReplies}
   {#each blog.replies as blog}
+
     <div class="replyBox" style="margin-left: {indent};">
+      <p class="entry">{blog.entry}</p>
+
       <!-- the following line is the interesting part:                 -->
       <!--  ie, if this comment/reply has more replies 'under it'      -->
       <!--  this component invokes itself to display the child reply   -->
       <!-- note the 'indent' in the enclosing div (above)              -->
       <!--   the current reply is indented 30px (or whatever you want) -->
       <!--   from the parent, which is the previous reply              -->
-      <p class="entry">{blog.entry}</p>
+
       <svelte:self {blog}/>
+
     </div>
+
   {/each}
 {/if}
 
