@@ -1,36 +1,62 @@
 <script>
-  let { blog } = $props();
+  //import { enhance, applyAction } from '$app/forms';
+  let { blog, blogItemTop } = $props();
+  import userStore   from "$stores/UserStore";   //  the user logged in (if any)
+  
   let indent = "30px";
-  let likes = $state(0);
-  let entry = $state();
-  let msg   = $state('')
-  let msgs  = $state('')
+  let likes  = $state(0);
+  let entry  = $state();
 
-  let showComment   = $state(true);
+  //  The following just controls the text in the Show/Hide buttons
+  //  ie, Comment(s) vs Reply(s) (only a comment has a title)
+  //                                  truthy       falsy
+  let msg  = $derived((blog.title) ? 'Comment' : 'Comments');
+  let msgs = $derived((blog.title) ? 'Reply'   : 'Replies');
+
+  let showReply   = $state(true);
   let showReplies = $state(false);
 
-  function addComment(){
-    blog.replies.push(
-      {
-        "username": "",
-        "entry": entry,
-        "replies": [],
-      })
-      showComment = true;
+  //  disable comment button if no user logged in
+  //let disableBtn = $derived($userStore.username ? false : true)
+  let disableBtn = $state(false)
+
+  function addReply(){
+    let reply = {
+      //"replyid": crypto.randomUUID(),
+      "userid": $userStore.userid,
+      "username": $userStore.username,
+      "title": 'phony title',
+      "entry": entry,
+      "likes": 0,
+      "dislikes": 0,
+      "replies": []
     }
 
-    //  The following just controls the text in the Show/Hide buttons
-    //  ie, Comment(s) vs Reply(s) (only a comment has a title)
-    $effect(() => {
-      if(blog.title){
-        msg  = "Comment"
-        msgs = "Comments"
-      } else {
-        msg  = "Reply"
-        msgs = "Replies"
-      }
-	  });
+      blog.replies.push(reply)
+      fetch('/replies?/addReply',
+        { method: 'POST',
+          body: JSON.stringify({
+            entry,
+            blogItemTop: JSON.stringify(blogItemTop)
+          })
+        })
+        //.then(response => console.log(response.message))
+        .then(response => {
+          //console.log('client, addReply response', response)
+          })
+        showReply = true;
+    }
 
+  function delReply(idx){
+    blog.replies[idx].length = 0;
+    blog.replies.splice(idx, 1)
+    //  nukes entry at idx - no user needed - user reply already deleted
+    fetch('/replies?/delReply',
+      { method: 'POST',
+        body: JSON.stringify(blogItemTop)
+      } )
+      showReply = true;
+  }
 
 </script>
 
@@ -40,16 +66,24 @@
     <img src="/thumbs-up.png" id="thumbsUpImg"  alt="thumbs">
   </button>
   <span id="likes">{likes}</span>
+  <!-- Hide/Show Comment(s) -->
+  <button disabled={disableBtn} class="btn" onclick={()=> showReply =  !showReply}>{msg}</button>
 
-  <button class="btn" onclick={()=> showComment =  !showComment}>{msg}</button>
-  <!--  Add a Comment (first level) or reply (subsequent levels) -->
-  <div class:reply={showComment} class="commentbox">
-    <textarea rows="6" name="entry" placeholder={msg} bind:value={entry}></textarea>
-    <button class="btn btnAdd" onclick="{addComment}">Add</button>
-    <button class="btn btnCancel" onclick={()=> showComment =  !showComment}>Cancel</button>
+  <div class:reply={showReply} class="replyBox">
+    <!--  Add a Comment (first level) or reply (subsequent levels) -->
+    <form method="POST" action="replies?/addReply">
+      <input type="hidden" name="username" value={$userStore.username}>
+      <input type="hidden" name="userid"   value={$userStore.userid}>
+      <input type="hidden" name="title"    value='phony title'>
+      <textarea rows="6" name="entry" placeholder={msg} bind:value={entry}></textarea>
+      <!--<button class="btn btnAdd">Add</button>-->
+      <button class="btn btnAdd"    type="button" onclick="{addReply}">Add</button>
+      <button class="btn btnCancel" type="button" onclick={()=> showReply =  !showReply}>Cancel</button>
+    </form>
   </div>
 
   {#if blog.replies.length > 0}
+  <!-- Hide/Show Reply(s) -->
     <button class="btn"
       onclick={()=> showReplies = !showReplies}>
       {showReplies ? 'Hide' : 'Show'} {msgs} {blog.replies.length}
@@ -60,22 +94,19 @@
 </div>
 
 {#if blog.replies && showReplies}
-  {#each blog.replies as blog}
-
+  {#each blog.replies as blog, idx}
     <div class="replyBox" style="margin-left: {indent};">
-      <p class="entry">{blog.entry}</p>
-
-      <!-- the following line is the interesting part:                 -->
-      <!--  ie, if this comment/reply has more replies 'under it'      -->
-      <!--  this component invokes itself to display the child reply   -->
-      <!-- note the 'indent' in the enclosing div (above)              -->
-      <!--   the current reply is indented 30px (or whatever you want) -->
-      <!--   from the parent, which is the previous reply              -->
-
-      <svelte:self {blog}/>
-
+      <p class="userName">{blog.username}</p>
+      <div class="entry">
+        <p id="replyEntry">{blog.entry}</p>
+        {#if $userStore.userid === blog.userid}
+          <button id="btnDel" type="button" onclick={()=>{delReply(idx)}}>Delete</button>
+        {:else}
+          <button disabled id="btnDel" type="button" onclick={()=>{delReply(idx)}}>Delete</button>
+        {/if}
+      </div>
+      <svelte:self {blog} {blogItemTop}/>
     </div>
-
   {/each}
 {/if}
 
@@ -83,8 +114,40 @@
   .container {
     margin-left: 30px;
   }
-  .commentbox {
+  .userName {
+    margin-left: .5rem;
+  }
+  .entry {
+    margin-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2;
+    /* border: 1px solid #aaa; */
+  }
+  .reply {
+    display: none;
+  }
+  #replyEntry {
+    margin: 0;
+  }
+  .replyBox {
     position: relative;
+    margin-bottom: 10px;
+    border-left: 1px solid #aaa;
+  }
+  #thumbsUpButton {
+    padding: 0;
+    background: transparent;
+    border: none;
+  }
+  #thumbsUpImg {
+    position: relative;
+    top: 2px;
+  }
+  #likes {
+    color: green;
+    margin-right: .5rem;
   }
   .btnAdd, .btnCancel {
     position: absolute;
@@ -93,46 +156,5 @@
   }
   .btnCancel {
     right: 20px;
-  }
-  .reply {
-    display: none;
-  }
-  .replyBox {
-    border-left: 1px solid #aaa;
-    margin-bottom: 10px;
-    /* border-bottom: 2px solid red; */
-  }
-  .btn {
-    font-size: .75em;
-    margin: .5em;
-    color: blue;
-    background-color: white;
-    border: 1px solid blue;
-  }
-  .btn:hover {
-    color: maroon;
-    background-color: white;
-    border: 1px solid maroon;
-  }
-  button:disabled {
-    font-size: .75em;
-    color: gray;
-    background-color: white;
-    border: 1px solid gray;
-  }
-  #thumbsUpButton {
-    margin: 0;
-    padding: 0;
-    background: transparent;
-  }
-  #thumbsUpImg {
-    position: relative;
-    top: 2px;
-  }
-  #likes {
-    color: green;
-  }
-  .entry {
-    margin-left: 10px;
   }
 </style>

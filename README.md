@@ -48,33 +48,35 @@ Take careful note of the 'blog.replies' array in the preceeding code and 'replie
 ```
 
 testBlogs = [{
-  "_id": 1,
+  "userid": 1,
   "username": "Wilma",
   "title": "'Blog' from Wilma",  
   "entry": "Blog entry...",
+  "likes":0,
+  "dislikes":0,
   "replies": [
     {
-      "username": "",
+      "userid": 2
+      "username": "Gordo",
       "entry": "comment 1",
+      "likes": 0,
+      "dislikes": 0,
       "replies": [],
     }
   ],
-  "likes": 0
 }]
 
 ```
 
-The 'Add Item' button just adds another item (phoney blog, in this case) to the list of 'commentable items'.
+The 'Add Item' button just adds another item (blog, in this case) to the list of 'commentable items'.
 
-This version of the project does not have a backend, as the initial intent is to show the client side mechanics of a comment/reply component.
-
-The 'blog' data comes from the 'testBlogs' array in $lib/index.js
-
-However, a version with a backend is in progress, which will add login, users and their avatars, and will save everything in a MongoDB database.
 
 ---
 
-To try this out, download the zip, extract it, go into that folder, type 'npm install'\
+The backend uses zod validation and MongoDB (Mongoose) for the database.  The Documentation on the website (see the nav bar) gives further details.
+
+
+To try this out, download/clone the project, go into that folder, type 'npm install'\
 Then, go into Visual Code, open a terminal, and type 'npm run dev'
 
 #### Acknowledgements

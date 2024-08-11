@@ -1,0 +1,40 @@
+button {
+  font-size: .75em;
+  margin-bottom: .5rem;
+  margin-right: .5rem;
+  color: blue;
+  background-color: white;
+  border: 1px solid blue;
+  transition: .3s;
+}
+
+button:hover {
+  font-size: .75em;
+  color: blue;
+  background-color: #f2f2f2;
+  border: 1px solid blue;
+}
+
+button:active {
+  font-size: .75em;
+  color: blue;
+  background-color: white;
+  border: 1px solid blue;
+}
+
+button:disabled, #btnDel:disabled {
+  font-size: .75em;
+  color: gray;
+  background-color: white;
+  border: 1px solid gray;
+  opacity: .7;
+  pointer-events: none;
+}
+#btnDel {
+  color: maroon;
+  border: 1px solid maroon;
+  transition: .3s;
+}
+#btnDel:hover {
+  background-color: #f2f2f2;
+}

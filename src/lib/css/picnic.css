@@ -359,6 +359,7 @@ button.pseudo,
   line-height: 1
 }
 
+/*
 .dropimage,
 button,
 .button,
@@ -394,7 +395,8 @@ button.pseudo:focus,
 .pseudo[type=submit]:focus {
   box-shadow: inset 0 0 0 99em rgba(17, 17, 17, .1)
 }
-
+*/
+/*
 .active.dropimage,
 button.active,
 .active.button,
@@ -405,6 +407,7 @@ button:active,
 [type=submit]:active {
   box-shadow: inset 0 0 0 99em rgba(17, 17, 17, .2)
 }
+  */
 
 [disabled].dropimage,
 button[disabled],

@@ -1,0 +1,78 @@
+/* stripped out of +page.svelte (main/landing page/ root route) */
+#btnAdd {
+  font-size: .75em;
+  color: green;
+  background-color: white;
+  border: 1px solid green;
+}
+#btnAdd:hover {
+  color: maroon;
+  background-color: white;
+  border: 1px solid maroon;
+}
+#btnAdd:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+/* stripped out of BlogItem.svelte */
+#btnDel {
+  font-size: .75em;
+  background-color: white;
+}
+#btnDel:hover {
+  color: maroon;
+  background-color: lightgrey;
+  /*border: 1px solid maroon;*/
+}
+#btnDel:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+/* stripped out of Comments.svelte */
+/*  note duplicates */
+button:disabled {
+  font-size: .75em;
+  color: gray;
+  background-color: white;
+  border: 1px solid gray;
+}
+.btn {
+  font-size: .75em;
+  margin: .5em;
+  color: blue;
+  background-color: white;
+  border: 1px solid blue;
+}
+.btn:hover {
+  color: maroon;
+  background-color: white;
+  border: 1px solid maroon;
+}
+.btnAdd, .btnCancel {
+  position: absolute;
+  right: 100px;
+  bottom: 10px;
+}
+.btnCancel {
+  right: 20px;
+}
+#btnDel {
+  font-size: .75em;
+  background-color: #f2f2f2;
+  align-self: flex-end;
+}
+#btnDel:hover {
+  color: maroon;
+  background-color: lightgrey;
+  /*border: 1px solid maroon;*/
+}
+#btnDel:disabled {
+  font-size: .75em;
+  color: gray;
+  background-color: red;
+  border: 1px solid gray;
+}

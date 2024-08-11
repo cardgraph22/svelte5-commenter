@@ -1,12 +1,17 @@
+
+html {
+  width: 100vw;
+}
+
 body {
-  margin: 10px;
   max-width: 1000px;
-  width: 95%;
+  box-sizing: border-box;
   margin: 0 auto;
+  padding: 10px;
+  color: #404040;
 }
 
 .hdr {
-  color: #404040;
   font-size: xx-large;
   text-align: center;
 }
@@ -14,11 +19,16 @@ body {
   color: maroon;
 }
 
+.txtError {
+  color: maroon;
+  font-size: small;
+}
+
 @media (max-width: 650px) {
   body {
     font-size: .75rem;
   }
-  img {
-    width: 75%;
+  .component {
+    font-size: large;
   }
 }
