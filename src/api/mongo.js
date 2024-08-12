@@ -1,8 +1,10 @@
 import mongoose from "mongoose"
 mongoose.set('strictQuery', false);
 
-//import { MONGODB_URI } from process.env.MONGODB_URI;
+////  use this for local development
+import { MONGODB_URI } from '$env/static/private'
 
+//  use this for vercel
 let MONGODB_URI = process.env.MONGODB_URI;
 
 export async function startMongo() {

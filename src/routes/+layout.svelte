@@ -36,8 +36,8 @@
            }}
         >Logout</a>
       {/if}
-      <!--<a href="/listUsers" class="pseudo button noOp">List Users</a>-->
-      <a href="/listUsers" class="pseudo button">List Users</a>
+      <a href="/listUsers" class="pseudo button noOp">List Users</a>
+      <!--<a href="/listUsers" class="pseudo button">List Users</a>-->
     </div>
   </nav>
 </div>

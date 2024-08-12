@@ -57,7 +57,7 @@
 
 <p>The 'Add Item' button just adds another item (blog, in this case) to the list of 'commentable items'.  The 'List Users' in the navbar is an admin thing, and is disabled for this demo site.  But if you clone the site and want to use it, just remove the class 'noOp' for its anchor in +layout.svelte</p>
 
-<p class="demo">For the demo site only (the live site you see with the accompanying link), the 'Add Item' and 'Add Comment' buttons are always enabled so the user can try them out.  On a real site, enable the $derived disableBtn logic in /+page.svelte and $lib/Components/Comments.svelte.  For 'Delete' (a blog, comment or reply) you have to log in and create one of these text entries to delete it.</p>
+<p class="demo">For this, the demo site only (the live site you see with the accompanying link), the 'Add Item' and 'Add Comment' buttons are always enabled so the user can try them out.  On a real site, enable the $derived disableBtn logic in /+page.svelte and $lib/Components/Comments.svelte.  'Delete' (a blog, comment or reply) is also far more lenient than a real site would be, but deleting other people's texts is not allowed.</p>
 
 <h3>The Backend</h3>
 
