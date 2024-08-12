@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 mongoose.set('strictQuery', false);
 
-import { MONGODB_URI } from '$env/static/private'
+import { MONGODB_URI } from process.env.MONGODB_URI;
 
 export async function startMongo() {
   console.log('mongo.js, connect to db')
