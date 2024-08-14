@@ -6,6 +6,7 @@
   let { idx, blog } = $props();
   let blogItemTop = blog;
   let blogs = $blogsStore;
+  let depth = $state(1);
 
   //  disable Delete button if user not author
   let disableBtn = $derived(($userStore.userid === blog.userid) ? false : true)
@@ -36,7 +37,7 @@
   <p>{blog.entry}</p>
 
   <!-- and this is the comments section -->
-  <Comments {blog} {blogItemTop} />
+  <Comments {blog} {blogItemTop} {depth}/>
 </article>
 
 <style>

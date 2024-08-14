@@ -3,6 +3,7 @@ node_modules
 /build
 /.svelte-kit
 /package
+/api/mongo.js
 .env
 .env.*
 !.env.example

@@ -1,9 +1,14 @@
 <script>
   //import { enhance, applyAction } from '$app/forms';
-  let { blog, blogItemTop } = $props();
+  let { blog, blogItemTop, depth } = $props();
   import userStore   from "$stores/UserStore";   //  the user logged in (if any)
   
-  let indent = "30px";
+  //let indent = "30px";
+  //  reduce indent for successive nested replies
+  let indent = 30/depth + "px"
+  //console.log('Comments, depth', depth)
+  //console.log('Comments, indent', indent)
+  depth++;
   let likes  = $state(0);
   let entry  = $state();
 
@@ -105,7 +110,7 @@
           <button disabled id="btnDel" type="button" onclick={()=>{delReply(idx)}}>Delete</button>
         {/if}
       </div>
-      <svelte:self {blog} {blogItemTop}/>
+      <svelte:self {blog} {blogItemTop} {depth}/>
     </div>
   {/each}
 {/if}

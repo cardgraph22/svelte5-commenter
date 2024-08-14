@@ -43,7 +43,7 @@
 <Dialog bind:dialog on:close={() => console.log('closed')}>
   <form method="POST" action="?/addblog" use:enhance={() => {
 		return async ({ result, update }) => {
-      console.log('homepage, add blog result', result)
+      //console.log('homepage, add blog result', result)
       if(result.data.success === true) {
         blogs.push(JSON.parse(result.data.blog))
       }
@@ -80,9 +80,5 @@
     color: green;
     border: 1px solid green;
   }
-  .addNote {
-    font-size: smaller;
-    font-style: italic;
-    color: grey;
-  }
+
 </style>
