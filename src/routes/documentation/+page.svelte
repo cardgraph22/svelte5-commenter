@@ -11,30 +11,39 @@
   {#if blog.replies && showReplies}
     {#each blog.replies as blog}
       <div style="margin-left: {indent};">   
-        <svelte:self {blog}/>
+        <Comments {blog}/>
       </div>
     {/each}
   {/if}
   `
   let dbschema = `
   export const blogSchema = new Schema({
-  userid: String,   // user id of author
-  username: String, //user name of author
-  title: String,
-  entry: String,
-  likes: Number,
-  dislikes: Number,
-  replies: []
-});`
+    userid: String,   // user id of author
+    username: String, // user name of author
+    title: String,
+    entry: String,
+    likes: Number,
+    dislikes: Number,
+    replies: []
+  });`
+
+  let useComments = `
+    <Comments {blog}>
+  `
 
 </script>
 
 <p>Blog posts, forum posts and news articles usually have a comments section.</p>
-<p>This project was created using Svelte 5, and demonstrates a 'comment section'; a series of recursive, nested comments, and their replies, and <i>their</i> replies (and so forth) by using the element:</p>
+<p>This project was created using Svelte 5, and demonstrates a 'comment section'; a series of recursive, nested comments, and their replies, and <i>their</i> replies (and so forth).</p>
 
-<p class="component">&lt;svelte:self&gt;</p>
+<p>To accomplish this, import the code in itself, ie, in the code Comments.svelte, add:</p>
 
-<p>which is invoked in the Comments.svelte component (which is in $lib/Components)</p>
+<span class="component">import Comments from '$lib/Components/Comments.svelte'</span>
+
+<p>Then invoke it later in the code as appropriate:</p>
+<span class="component">{useComments}</span>
+
+<p>This replaces the pre version 5 <span class="component">&lt;svelte:self&gt;</span></p>
 
 <p>This purpose of this site is to examine the mechanics of a blog/comment/replies functionality, and UI synergy between login state and blog actions (such as Add and Delete)</p>
 
@@ -47,8 +56,6 @@
 
 <p>The key concept here is that the 'replies' blog property (an array) has its own 'replies' property (again, an array) as a member.</p>
 <p>So, if a reply has more replies under it (ie, a non-empty replies array), the component</p>
-<p class="component">&lt;svelte:self &lbrace;blog&rbrace;&nbsp;&nbsp;&#47;&gt;</p>
-<p>IE:</p>
 <p class="component">&ltComments &lbrace;blog&rbrace;&nbsp;&nbsp;&#47;&gt;</p>
 <p>is invoked until there are no more nested replies.</p>
 <p>Take careful note of the 'blog.replies' array in the preceeding code and 'replies' array in the following schema.  If non-empty, recursion occurs.</p>
@@ -66,10 +73,6 @@
 
 <p>The 'Login' (the /login route) is rudimentary; just a username and password.  It does, however, use some simple zod validation, and provides an example of some newer Svelte v5 logic for forms.</p>
 
-<h3>The Future</h3>
-
-<p>Further enhancements will ensue; improved UI, avatars, better delete functionality, complete likes/dislikes,...  But this seemed like a decent milestone for a git update.</p>
-
 <h3>Acknowledgements</h3>
 <p>The project uses picnic.css for styling and ICONPACKS (www.iconpacks.net) for icons.</p>
 
@@ -82,7 +85,7 @@
     color: purple;
     background-color: #f2f2f2;
     margin-left: 30px;
-     font-size: larger;
+    font-size: larger;
     padding: 10px;
     border-radius: 10px;
     display: inline-block;
