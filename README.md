@@ -1,11 +1,15 @@
 
 Blog posts, forum posts and news articles usually have a comments section.
 
-This project was created using Svelte 5, and demonstrates a 'comment section'; a series of recursive, nested comments, and their replies, and _their_ replies (and so forth) by using the element:
+This project was created using Svelte 5, and demonstrates a 'comment section'; a series of recursive, nested comments, and their replies, and _their_ replies (and so forth).
 
-<svelte:self>
+To accomplish this, import the code in itself, ie, in the code Comments.svelte, add:
 
-which is invoked in the Comments.svelte component (which is in $lib/Components)
+import Comments from '$lib/Components/Comments.svelte'
+
+Then invoke it later in the code as appropriate:
+
+<Comments {blog}>
 
 This:
 ```
@@ -25,7 +29,7 @@ is generated with this:
 {#if blog.replies && showReplies}
   {#each blog.replies as blog}
     <div style="margin-left: {indent};">   
-      <svelte:self {blog}/>
+      <Comments {blog}>
     </div>
   {/each}
 {/if}
@@ -36,11 +40,7 @@ The key concept here is that the 'replies' blog property (an array) has its own 
 
 So, if a reply has more replies under it (ie, a non-empty replies array), the component
 
-<svelte:self {blog}  />
-
-IE:
-
-<Comments {blog}  />
+<Comments {blog} />
 
 is invoked until there are no more nested replies.
 
