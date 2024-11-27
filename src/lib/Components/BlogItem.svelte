@@ -1,5 +1,5 @@
 <script>
-  import Comments   from "./Comments.svelte";
+  import Comments   from "$lib/Components/Comments.svelte";
   import blogsStore from "$stores/BlogsStore";  //  all blogs
   import userStore  from "$stores/UserStore";  //  the user logged in (if any)
   
