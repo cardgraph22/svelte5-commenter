@@ -43,7 +43,7 @@
 <p>Then invoke it later in the code as appropriate:</p>
 <span class="component">{useComments}</span>
 
-<p>This replaces the pre version 5 <span class="component">&lt;svelte:self&gt;</span></p>
+<p>This replaces the pre version 5 (deprecated) <span class="component">&lt;svelte:self&gt;</span></p>
 
 <p>This purpose of this site is to examine the mechanics of a blog/comment/replies functionality, and UI synergy between login state and blog actions (such as Add and Delete)</p>
 
